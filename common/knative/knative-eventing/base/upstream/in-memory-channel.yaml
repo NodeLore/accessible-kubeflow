@@ -4,18 +4,21 @@ metadata:
   name: config-imc-event-dispatcher
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
 data:
-  MaxIdleConnections: "1000"
-  MaxIdleConnectionsPerHost: "100"
+  MaxIdleConnections: '1000'
+  MaxIdleConnectionsPerHost: '100'
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: imc-addressable-resolver
   labels:
-    eventing.knative.dev/release: "v0.22.1"
-    duck.knative.dev/addressable: "true"
+    eventing.knative.dev/release: v0.22.1
+    duck.knative.dev/addressable: 'true'
 rules:
   - apiGroups:
       - messaging.knative.dev
@@ -26,14 +29,17 @@ rules:
       - get
       - list
       - watch
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: imc-channelable-manipulator
   labels:
-    eventing.knative.dev/release: "v0.22.1"
-    duck.knative.dev/channelable: "true"
+    eventing.knative.dev/release: v0.22.1
+    duck.knative.dev/channelable: 'true'
 rules:
   - apiGroups:
       - messaging.knative.dev
@@ -47,13 +53,16 @@ rules:
       - watch
       - update
       - patch
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: imc-controller
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
 rules:
   - apiGroups:
       - messaging.knative.dev
@@ -80,7 +89,7 @@ rules:
     verbs:
       - patch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - services
       - serviceaccounts
@@ -92,7 +101,7 @@ rules:
       - update
       - patch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - endpoints
     verbs:
@@ -100,7 +109,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - "rbac.authorization.k8s.io"
+      - rbac.authorization.k8s.io
     resources:
       - rolebindings
     verbs:
@@ -130,7 +139,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - configmaps
     verbs:
@@ -138,7 +147,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - events
     verbs:
@@ -155,21 +164,27 @@ rules:
       - create
       - update
       - patch
+
+
 ---
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: imc-controller
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: imc-dispatcher
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
 rules:
   - apiGroups:
       - messaging.knative.dev
@@ -181,7 +196,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - configmaps
     verbs:
@@ -189,7 +204,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - events
     verbs:
@@ -214,14 +229,17 @@ rules:
       - create
       - update
       - patch
+
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
   name: imc-dispatcher
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
     messaging.knative.dev/channel: in-memory-channel
     messaging.knative.dev/role: dispatcher
 spec:
@@ -233,21 +251,27 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 8080
+
+
 ---
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: imc-dispatcher
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: imc-controller
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
 subjects:
   - kind: ServiceAccount
     name: imc-controller
@@ -256,13 +280,16 @@ roleRef:
   kind: ClusterRole
   name: imc-controller
   apiGroup: rbac.authorization.k8s.io
+
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: imc-dispatcher
   labels:
-    eventing.knative.dev/release: "v0.22.1"
+    eventing.knative.dev/release: v0.22.1
 subjects:
   - kind: ServiceAccount
     name: imc-dispatcher
@@ -271,16 +298,19 @@ roleRef:
   kind: ClusterRole
   name: imc-dispatcher
   apiGroup: rbac.authorization.k8s.io
+
+
 ---
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: inmemorychannels.messaging.knative.dev
   labels:
-    eventing.knative.dev/release: "v0.22.1"
-    knative.dev/crd-install: "true"
-    messaging.knative.dev/subscribable: "true"
-    duck.knative.dev/addressable: "true"
+    eventing.knative.dev/release: v0.22.1
+    knative.dev/crd-install: 'true'
+    messaging.knative.dev/subscribable: 'true'
+    duck.knative.dev/addressable: 'true'
 spec:
   group: messaging.knative.dev
   versions:
@@ -298,17 +328,31 @@ spec:
               type: object
               properties:
                 delivery:
-                  description: DeliverySpec contains the default delivery spec for each subscription to this Channelable. Each subscription delivery spec, if any, overrides this global delivery spec.
+                  description: >-
+                    DeliverySpec contains the default delivery spec for each
+                    subscription to this Channelable. Each subscription delivery
+                    spec, if any, overrides this global delivery spec.
                   type: object
                   properties:
                     backoffDelay:
-                      description: 'BackoffDelay is the delay before retrying. More information on Duration format: - https://www.iso.org/iso-8601-date-and-time-format.html - https://en.wikipedia.org/wiki/ISO_8601  For linear policy, backoff delay is backoffDelay*<numberOfRetries>. For exponential policy, backoff delay is backoffDelay*2^<numberOfRetries>.'
+                      description: >-
+                        BackoffDelay is the delay before retrying. More
+                        information on Duration format: -
+                        https://www.iso.org/iso-8601-date-and-time-format.html -
+                        https://en.wikipedia.org/wiki/ISO_8601  For linear
+                        policy, backoff delay is backoffDelay*<numberOfRetries>.
+                        For exponential policy, backoff delay is
+                        backoffDelay*2^<numberOfRetries>.
                       type: string
                     backoffPolicy:
-                      description: BackoffPolicy is the retry backoff policy (linear, exponential).
+                      description: >-
+                        BackoffPolicy is the retry backoff policy (linear,
+                        exponential).
                       type: string
                     deadLetterSink:
-                      description: DeadLetterSink is the sink receiving event that could not be sent to a destination.
+                      description: >-
+                        DeadLetterSink is the sink receiving event that could
+                        not be sent to a destination.
                       type: object
                       properties:
                         ref:
@@ -319,19 +363,34 @@ spec:
                               description: API version of the referent.
                               type: string
                             kind:
-                              description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                              description: >-
+                                Kind of the referent. More info:
+                                https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                               type: string
                             name:
-                              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                              description: >-
+                                Name of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                               type: string
                             namespace:
-                              description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                              description: >-
+                                Namespace of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                This is optional field, it gets defaulted to the
+                                object holding it if left out.
                               type: string
                         uri:
-                          description: URI can be an absolute URL(non-empty scheme and non-empty host) pointing to the target or a relative URI. Relative URIs will be resolved using the base URI retrieved from Ref.
+                          description: >-
+                            URI can be an absolute URL(non-empty scheme and
+                            non-empty host) pointing to the target or a relative
+                            URI. Relative URIs will be resolved using the base
+                            URI retrieved from Ref.
                           type: string
                     retry:
-                      description: Retry is the minimum number of retries the sender should attempt when sending an event before moving it to the dead letter sink.
+                      description: >-
+                        Retry is the minimum number of retries the sender should
+                        attempt when sending an event before moving it to the
+                        dead letter sink.
                       type: integer
                       format: int32
                 subscribers:
@@ -341,17 +400,31 @@ spec:
                     type: object
                     properties:
                       delivery:
-                        description: DeliverySpec contains options controlling the event delivery
+                        description: >-
+                          DeliverySpec contains options controlling the event
+                          delivery
                         type: object
                         properties:
                           backoffDelay:
-                            description: 'BackoffDelay is the delay before retrying. More information on Duration format: - https://www.iso.org/iso-8601-date-and-time-format.html - https://en.wikipedia.org/wiki/ISO_8601  For linear policy, backoff delay is backoffDelay*<numberOfRetries>. For exponential policy, backoff delay is backoffDelay*2^<numberOfRetries>.'
+                            description: >-
+                              BackoffDelay is the delay before retrying. More
+                              information on Duration format: -
+                              https://www.iso.org/iso-8601-date-and-time-format.html
+                              - https://en.wikipedia.org/wiki/ISO_8601  For
+                              linear policy, backoff delay is
+                              backoffDelay*<numberOfRetries>. For exponential
+                              policy, backoff delay is
+                              backoffDelay*2^<numberOfRetries>.
                             type: string
                           backoffPolicy:
-                            description: BackoffPolicy is the retry backoff policy (linear, exponential).
+                            description: >-
+                              BackoffPolicy is the retry backoff policy (linear,
+                              exponential).
                             type: string
                           deadLetterSink:
-                            description: DeadLetterSink is the sink receiving event that could not be sent to a destination.
+                            description: >-
+                              DeadLetterSink is the sink receiving event that
+                              could not be sent to a destination.
                             type: object
                             properties:
                               ref:
@@ -362,23 +435,40 @@ spec:
                                     description: API version of the referent.
                                     type: string
                                   kind:
-                                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                                    description: >-
+                                      Kind of the referent. More info:
+                                      https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                                     type: string
                                   name:
-                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    description: >-
+                                      Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                     type: string
                                   namespace:
-                                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                                    description: >-
+                                      Namespace of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                      This is optional field, it gets defaulted
+                                      to the object holding it if left out.
                                     type: string
                               uri:
-                                description: URI can be an absolute URL(non-empty scheme and non-empty host) pointing to the target or a relative URI. Relative URIs will be resolved using the base URI retrieved from Ref.
+                                description: >-
+                                  URI can be an absolute URL(non-empty scheme
+                                  and non-empty host) pointing to the target or
+                                  a relative URI. Relative URIs will be resolved
+                                  using the base URI retrieved from Ref.
                                 type: string
                           retry:
-                            description: Retry is the minimum number of retries the sender should attempt when sending an event before moving it to the dead letter sink.
+                            description: >-
+                              Retry is the minimum number of retries the sender
+                              should attempt when sending an event before moving
+                              it to the dead letter sink.
                             type: integer
                             format: int32
                       generation:
-                        description: Generation of the origin of the subscriber with uid:UID.
+                        description: >-
+                          Generation of the origin of the subscriber with
+                          uid:UID.
                         type: integer
                         format: int64
                       replyUri:
@@ -388,10 +478,14 @@ spec:
                         description: SubscriberURI is the endpoint for the subscriber
                         type: string
                       uid:
-                        description: UID is used to understand the origin of the subscriber.
+                        description: >-
+                          UID is used to understand the origin of the
+                          subscriber.
                         type: string
             status:
-              description: Status represents the current state of the Channel. This data may be out of date.
+              description: >-
+                Status represents the current state of the Channel. This data
+                may be out of date.
               type: object
               properties:
                 address:
@@ -400,26 +494,43 @@ spec:
                     url:
                       type: string
                 annotations:
-                  description: Annotations is additional Status fields for the Resource to save some additional State as well as convey more information to the user. This is roughly akin to Annotations on any k8s resource, just the reconciler conveying richer information outwards.
+                  description: >-
+                    Annotations is additional Status fields for the Resource to
+                    save some additional State as well as convey more
+                    information to the user. This is roughly akin to Annotations
+                    on any k8s resource, just the reconciler conveying richer
+                    information outwards.
                   type: object
                   x-kubernetes-preserve-unknown-fields: true
                 conditions:
-                  description: Conditions the latest available observations of a resource's current state.
+                  description: >-
+                    Conditions the latest available observations of a resource's
+                    current state.
                   type: array
                   items:
                     type: object
                     properties:
                       lastTransitionTime:
-                        description: LastTransitionTime is the last time the condition transitioned from one status to another. We use VolatileTime in place of metav1.Time to exclude this from creating equality.Semantic differences (all other things held constant).
+                        description: >-
+                          LastTransitionTime is the last time the condition
+                          transitioned from one status to another. We use
+                          VolatileTime in place of metav1.Time to exclude this
+                          from creating equality.Semantic differences (all other
+                          things held constant).
                         type: string
                       message:
-                        description: A human readable message indicating details about the transition.
+                        description: >-
+                          A human readable message indicating details about the
+                          transition.
                         type: string
                       reason:
                         description: The reason for the condition's last transition.
                         type: string
                       severity:
-                        description: Severity with which to treat failures of this type of condition. When this is not specified, it defaults to Error.
+                        description: >-
+                          Severity with which to treat failures of this type of
+                          condition. When this is not specified, it defaults to
+                          Error.
                         type: string
                       status:
                         description: Status of the condition, one of True, False, Unknown.
@@ -428,43 +539,64 @@ spec:
                         description: Type of condition.
                         type: string
                 deadLetterChannel:
-                  description: DeadLetterChannel is a KReference and is set by the channel when it supports native error handling via a channel Failed messages are delivered here.
+                  description: >-
+                    DeadLetterChannel is a KReference and is set by the channel
+                    when it supports native error handling via a channel Failed
+                    messages are delivered here.
                   type: object
                   properties:
                     apiVersion:
                       description: API version of the referent.
                       type: string
                     kind:
-                      description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                      description: >-
+                        Kind of the referent. More info:
+                        https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                       type: string
                     name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                      description: >-
+                        Name of the referent. More info:
+                        https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                       type: string
                     namespace:
-                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                      description: >-
+                        Namespace of the referent. More info:
+                        https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                        This is optional field, it gets defaulted to the object
+                        holding it if left out.
                       type: string
                 observedGeneration:
-                  description: ObservedGeneration is the 'Generation' of the Service that was last processed by the controller.
+                  description: >-
+                    ObservedGeneration is the 'Generation' of the Service that
+                    was last processed by the controller.
                   type: integer
                   format: int64
                 subscribers:
-                  description: This is the list of subscription's statuses for this channel.
+                  description: >-
+                    This is the list of subscription's statuses for this
+                    channel.
                   type: array
                   items:
                     type: object
                     properties:
                       message:
-                        description: A human readable message indicating details of Ready status.
+                        description: >-
+                          A human readable message indicating details of Ready
+                          status.
                         type: string
                       observedGeneration:
-                        description: Generation of the origin of the subscriber with uid:UID.
+                        description: >-
+                          Generation of the origin of the subscriber with
+                          uid:UID.
                         type: integer
                         format: int64
                       ready:
                         description: Status of the subscriber.
                         type: string
                       uid:
-                        description: UID is used to understand the origin of the subscriber.
+                        description: >-
+                          UID is used to understand the origin of the
+                          subscriber.
                         type: string
       additionalPrinterColumns:
         - name: URL
@@ -475,10 +607,10 @@ spec:
           jsonPath: .metadata.creationTimestamp
         - name: Ready
           type: string
-          jsonPath: ".status.conditions[?(@.type==\"Ready\")].status"
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
         - name: Reason
           type: string
-          jsonPath: ".status.conditions[?(@.type==\"Ready\")].reason"
+          jsonPath: .status.conditions[?(@.type=="Ready")].reason
     - subresources:
         status: {}
       additionalPrinterColumns:
@@ -490,10 +622,10 @@ spec:
           jsonPath: .metadata.creationTimestamp
         - name: Ready
           type: string
-          jsonPath: ".status.conditions[?(@.type==\"Ready\")].status"
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
         - name: Reason
           type: string
-          jsonPath: ".status.conditions[?(@.type==\"Ready\")].reason"
+          jsonPath: .status.conditions[?(@.type=="Ready")].reason
       name: v1
       served: true
       storage: true
@@ -506,17 +638,31 @@ spec:
               type: object
               properties:
                 delivery:
-                  description: DeliverySpec contains the default delivery spec for each subscription to this Channelable. Each subscription delivery spec, if any, overrides this global delivery spec.
+                  description: >-
+                    DeliverySpec contains the default delivery spec for each
+                    subscription to this Channelable. Each subscription delivery
+                    spec, if any, overrides this global delivery spec.
                   type: object
                   properties:
                     backoffDelay:
-                      description: 'BackoffDelay is the delay before retrying. More information on Duration format: - https://www.iso.org/iso-8601-date-and-time-format.html - https://en.wikipedia.org/wiki/ISO_8601  For linear policy, backoff delay is backoffDelay*<numberOfRetries>. For exponential policy, backoff delay is backoffDelay*2^<numberOfRetries>.'
+                      description: >-
+                        BackoffDelay is the delay before retrying. More
+                        information on Duration format: -
+                        https://www.iso.org/iso-8601-date-and-time-format.html -
+                        https://en.wikipedia.org/wiki/ISO_8601  For linear
+                        policy, backoff delay is backoffDelay*<numberOfRetries>.
+                        For exponential policy, backoff delay is
+                        backoffDelay*2^<numberOfRetries>.
                       type: string
                     backoffPolicy:
-                      description: BackoffPolicy is the retry backoff policy (linear, exponential).
+                      description: >-
+                        BackoffPolicy is the retry backoff policy (linear,
+                        exponential).
                       type: string
                     deadLetterSink:
-                      description: DeadLetterSink is the sink receiving event that could not be sent to a destination.
+                      description: >-
+                        DeadLetterSink is the sink receiving event that could
+                        not be sent to a destination.
                       type: object
                       properties:
                         ref:
@@ -527,19 +673,34 @@ spec:
                               description: API version of the referent.
                               type: string
                             kind:
-                              description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                              description: >-
+                                Kind of the referent. More info:
+                                https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                               type: string
                             name:
-                              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                              description: >-
+                                Name of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                               type: string
                             namespace:
-                              description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                              description: >-
+                                Namespace of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                This is optional field, it gets defaulted to the
+                                object holding it if left out.
                               type: string
                         uri:
-                          description: URI can be an absolute URL(non-empty scheme and non-empty host) pointing to the target or a relative URI. Relative URIs will be resolved using the base URI retrieved from Ref.
+                          description: >-
+                            URI can be an absolute URL(non-empty scheme and
+                            non-empty host) pointing to the target or a relative
+                            URI. Relative URIs will be resolved using the base
+                            URI retrieved from Ref.
                           type: string
                     retry:
-                      description: Retry is the minimum number of retries the sender should attempt when sending an event before moving it to the dead letter sink.
+                      description: >-
+                        Retry is the minimum number of retries the sender should
+                        attempt when sending an event before moving it to the
+                        dead letter sink.
                       type: integer
                       format: int32
                 subscribers:
@@ -549,17 +710,31 @@ spec:
                     type: object
                     properties:
                       delivery:
-                        description: DeliverySpec contains options controlling the event delivery
+                        description: >-
+                          DeliverySpec contains options controlling the event
+                          delivery
                         type: object
                         properties:
                           backoffDelay:
-                            description: 'BackoffDelay is the delay before retrying. More information on Duration format: - https://www.iso.org/iso-8601-date-and-time-format.html - https://en.wikipedia.org/wiki/ISO_8601  For linear policy, backoff delay is backoffDelay*<numberOfRetries>. For exponential policy, backoff delay is backoffDelay*2^<numberOfRetries>.'
+                            description: >-
+                              BackoffDelay is the delay before retrying. More
+                              information on Duration format: -
+                              https://www.iso.org/iso-8601-date-and-time-format.html
+                              - https://en.wikipedia.org/wiki/ISO_8601  For
+                              linear policy, backoff delay is
+                              backoffDelay*<numberOfRetries>. For exponential
+                              policy, backoff delay is
+                              backoffDelay*2^<numberOfRetries>.
                             type: string
                           backoffPolicy:
-                            description: BackoffPolicy is the retry backoff policy (linear, exponential).
+                            description: >-
+                              BackoffPolicy is the retry backoff policy (linear,
+                              exponential).
                             type: string
                           deadLetterSink:
-                            description: DeadLetterSink is the sink receiving event that could not be sent to a destination.
+                            description: >-
+                              DeadLetterSink is the sink receiving event that
+                              could not be sent to a destination.
                             type: object
                             properties:
                               ref:
@@ -570,23 +745,40 @@ spec:
                                     description: API version of the referent.
                                     type: string
                                   kind:
-                                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                                    description: >-
+                                      Kind of the referent. More info:
+                                      https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                                     type: string
                                   name:
-                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    description: >-
+                                      Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                     type: string
                                   namespace:
-                                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                                    description: >-
+                                      Namespace of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                      This is optional field, it gets defaulted
+                                      to the object holding it if left out.
                                     type: string
                               uri:
-                                description: URI can be an absolute URL(non-empty scheme and non-empty host) pointing to the target or a relative URI. Relative URIs will be resolved using the base URI retrieved from Ref.
+                                description: >-
+                                  URI can be an absolute URL(non-empty scheme
+                                  and non-empty host) pointing to the target or
+                                  a relative URI. Relative URIs will be resolved
+                                  using the base URI retrieved from Ref.
                                 type: string
                           retry:
-                            description: Retry is the minimum number of retries the sender should attempt when sending an event before moving it to the dead letter sink.
+                            description: >-
+                              Retry is the minimum number of retries the sender
+                              should attempt when sending an event before moving
+                              it to the dead letter sink.
                             type: integer
                             format: int32
                       generation:
-                        description: Generation of the origin of the subscriber with uid:UID.
+                        description: >-
+                          Generation of the origin of the subscriber with
+                          uid:UID.
                         type: integer
                         format: int64
                       replyUri:
@@ -596,10 +788,14 @@ spec:
                         description: SubscriberURI is the endpoint for the subscriber
                         type: string
                       uid:
-                        description: UID is used to understand the origin of the subscriber.
+                        description: >-
+                          UID is used to understand the origin of the
+                          subscriber.
                         type: string
             status:
-              description: Status represents the current state of the Channel. This data may be out of date.
+              description: >-
+                Status represents the current state of the Channel. This data
+                may be out of date.
               type: object
               properties:
                 address:
@@ -608,26 +804,43 @@ spec:
                     url:
                       type: string
                 annotations:
-                  description: Annotations is additional Status fields for the Resource to save some additional State as well as convey more information to the user. This is roughly akin to Annotations on any k8s resource, just the reconciler conveying richer information outwards.
+                  description: >-
+                    Annotations is additional Status fields for the Resource to
+                    save some additional State as well as convey more
+                    information to the user. This is roughly akin to Annotations
+                    on any k8s resource, just the reconciler conveying richer
+                    information outwards.
                   type: object
                   x-kubernetes-preserve-unknown-fields: true
                 conditions:
-                  description: Conditions the latest available observations of a resource's current state.
+                  description: >-
+                    Conditions the latest available observations of a resource's
+                    current state.
                   type: array
                   items:
                     type: object
                     properties:
                       lastTransitionTime:
-                        description: LastTransitionTime is the last time the condition transitioned from one status to another. We use VolatileTime in place of metav1.Time to exclude this from creating equality.Semantic differences (all other things held constant).
+                        description: >-
+                          LastTransitionTime is the last time the condition
+                          transitioned from one status to another. We use
+                          VolatileTime in place of metav1.Time to exclude this
+                          from creating equality.Semantic differences (all other
+                          things held constant).
                         type: string
                       message:
-                        description: A human readable message indicating details about the transition.
+                        description: >-
+                          A human readable message indicating details about the
+                          transition.
                         type: string
                       reason:
                         description: The reason for the condition's last transition.
                         type: string
                       severity:
-                        description: Severity with which to treat failures of this type of condition. When this is not specified, it defaults to Error.
+                        description: >-
+                          Severity with which to treat failures of this type of
+                          condition. When this is not specified, it defaults to
+                          Error.
                         type: string
                       status:
                         description: Status of the condition, one of True, False, Unknown.
@@ -636,43 +849,64 @@ spec:
                         description: Type of condition.
                         type: string
                 deadLetterChannel:
-                  description: DeadLetterChannel is a KReference and is set by the channel when it supports native error handling via a channel Failed messages are delivered here.
+                  description: >-
+                    DeadLetterChannel is a KReference and is set by the channel
+                    when it supports native error handling via a channel Failed
+                    messages are delivered here.
                   type: object
                   properties:
                     apiVersion:
                       description: API version of the referent.
                       type: string
                     kind:
-                      description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                      description: >-
+                        Kind of the referent. More info:
+                        https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
                       type: string
                     name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                      description: >-
+                        Name of the referent. More info:
+                        https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                       type: string
                     namespace:
-                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ This is optional field, it gets defaulted to the object holding it if left out.'
+                      description: >-
+                        Namespace of the referent. More info:
+                        https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                        This is optional field, it gets defaulted to the object
+                        holding it if left out.
                       type: string
                 observedGeneration:
-                  description: ObservedGeneration is the 'Generation' of the Service that was last processed by the controller.
+                  description: >-
+                    ObservedGeneration is the 'Generation' of the Service that
+                    was last processed by the controller.
                   type: integer
                   format: int64
                 subscribers:
-                  description: This is the list of subscription's statuses for this channel.
+                  description: >-
+                    This is the list of subscription's statuses for this
+                    channel.
                   type: array
                   items:
                     type: object
                     properties:
                       message:
-                        description: A human readable message indicating details of Ready status.
+                        description: >-
+                          A human readable message indicating details of Ready
+                          status.
                         type: string
                       observedGeneration:
-                        description: Generation of the origin of the subscriber with uid:UID.
+                        description: >-
+                          Generation of the origin of the subscriber with
+                          uid:UID.
                         type: integer
                         format: int64
                       ready:
                         description: Status of the subscriber.
                         type: string
                       uid:
-                        description: UID is used to understand the origin of the subscriber.
+                        description: >-
+                          UID is used to understand the origin of the
+                          subscriber.
                         type: string
   names:
     kind: InMemoryChannel
@@ -689,20 +923,25 @@ spec:
   conversion:
     strategy: Webhook
     webhook:
-      conversionReviewVersions: ["v1", "v1beta1"]
+      conversionReviewVersions:
+        - v1
+        - v1beta1
       clientConfig:
         service:
           name: eventing-webhook
           namespace: knative-eventing
+
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: imc-controller
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
-    knative.dev/high-availability: "true"
+    eventing.knative.dev/release: v0.22.1
+    knative.dev/high-availability: 'true'
 spec:
   selector:
     matchLabels:
@@ -718,7 +957,8 @@ spec:
       enableServiceLinks: false
       containers:
         - name: controller
-          image: gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_controller@sha256:904f42a768a9bc64999e7302d2bc7c1c48a08e74a82355cf57be513e6a124b82
+          image: >-
+            gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_controller:v0.22.1
           env:
             - name: CONFIG_LOGGING_NAME
               value: config-logging
@@ -731,7 +971,8 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DISPATCHER_IMAGE
-              value: gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_dispatcher@sha256:a6983f71c04619928199cc21e07ee6f1e1c87586621bc03b10c9ba1abd92bfa8
+              value: >-
+                gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_dispatcher@sha256:a6983f71c04619928199cc21e07ee6f1e1c87586621bc03b10c9ba1abd92bfa8
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -743,15 +984,18 @@ spec:
               containerPort: 9090
             - name: profiling
               containerPort: 8008
+
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: imc-dispatcher
   namespace: knative-eventing
   labels:
-    eventing.knative.dev/release: "v0.22.1"
-    knative.dev/high-availability: "true"
+    eventing.knative.dev/release: v0.22.1
+    knative.dev/high-availability: 'true'
 spec:
   selector:
     matchLabels:
@@ -777,7 +1021,8 @@ spec:
       enableServiceLinks: false
       containers:
         - name: dispatcher
-          image: gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_dispatcher@sha256:a6983f71c04619928199cc21e07ee6f1e1c87586621bc03b10c9ba1abd92bfa8
+          image: >-
+            gcr.io/knative-releases/knative.dev/eventing/cmd/in_memory/channel_dispatcher:v0.22.1
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -815,14 +1060,18 @@ spec:
             - name: CONTAINER_NAME
               value: dispatcher
             - name: MAX_IDLE_CONNS
-              value: "1000"
+              value: '1000'
             - name: MAX_IDLE_CONNS_PER_HOST
-              value: "1000"
+              value: '1000'
           ports:
             - containerPort: 8080
               name: http
               protocol: TCP
             - containerPort: 9090
               name: metrics
+
+
 ---
+
+null
 

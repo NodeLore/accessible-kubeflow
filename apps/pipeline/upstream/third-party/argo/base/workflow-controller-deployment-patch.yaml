@@ -7,13 +7,14 @@ spec:
     spec:
       containers:
         - name: workflow-controller
-          image: gcr.io/ml-pipeline/workflow-controller:v3.1.6-patch-license-compliance
+          image: gcr.io/ml-pipeline/workflow-controller:v3.2.3-license-compliance
           args:
-            - --configmap
+            - '--configmap'
             - workflow-controller-configmap
-            - --executor-image
-            - gcr.io/ml-pipeline/argoexec:v3.1.6-patch-license-compliance
+            - '--executor-image'
+            - gcr.io/ml-pipeline/argoexec:v3.2.3-license-compliance
           resources:
             requests:
               cpu: 100m
               memory: 500Mi
+

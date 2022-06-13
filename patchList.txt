@@ -1,0 +1,5 @@
+storageClassName: local-storage
+apps/katib/upstream/components/mysql/pvc.yaml
+apps/pipeline/upstream/third-party/minio/base/minio-pvc.yaml
+apps/pipeline/upstream/third-party/mysql/base/mysql-pv-claim.yaml
+common/oidc-authservice/base/pvc.yaml

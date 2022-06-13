@@ -11,26 +11,26 @@ spec:
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: "false"
+        sidecar.istio.io/inject: 'false'
       labels:
         app: authservice
     spec:
       containers:
-      - name: authservice
-        image: gcr.io/arrikto/kubeflow/oidc-authservice:6ac9400
-        imagePullPolicy: Always
-        ports:
-        - name: http-api
-          containerPort: 8080
-        envFrom:
-          - secretRef:
-              name: oidc-authservice-client
-          - configMapRef:
-              name: oidc-authservice-parameters
-        volumeMounts:
-          - name: data
-            mountPath: /var/lib/authservice
-        readinessProbe:
+        - name: authservice
+          image: gcr.io/arrikto/kubeflow/oidc-authservice:6ac9400
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http-api
+              containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: oidc-authservice-client
+            - configMapRef:
+                name: oidc-authservice-parameters
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/authservice
+          readinessProbe:
             httpGet:
               path: /
               port: 8081
@@ -39,4 +39,5 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-              claimName: authservice-pvc
+            claimName: authservice-pvc
+
