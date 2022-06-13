@@ -1,5 +1,6 @@
 #!/bin/bash
 kubectl delete -f kubeflow-storage.yaml
+kubectl patch pv katib-mysql -p '{"metadata":{"finalizers":null}}'
 kubectl apply -f kubeflow-storage.yaml
 kubectl delete namespace knative-serving
 kubectl delete namespace knative-eventing
