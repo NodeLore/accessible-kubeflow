@@ -12679,6 +12679,15 @@ spec:
         controller-tools.k8s.io: '1.0'
     spec:
       containers:
+        - name: registry
+          image: registry
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: registry-volume
+            mountPath: /var/lib/registry
+          ports:
+          - name: registry-port
+            containerPort: 5000
         - args:
             - '--metrics-addr=127.0.0.1:8080'
           command:
@@ -12720,6 +12729,9 @@ spec:
               name: https
       terminationGracePeriodSeconds: 10
       volumes:
+        - name: registry-volume
+          hostPath:
+            path: /data/docker/
         - name: cert
           secret:
             defaultMode: 420

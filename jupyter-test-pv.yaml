@@ -12,4 +12,18 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/jupyter-test-pv"
+    path: "/data/captcha-test-pv/captcha-test"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jupyter-test-pv-claim
+  namespace: kubeflow-user-example-com
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
